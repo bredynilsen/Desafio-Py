@@ -1,0 +1,112 @@
+"Programa em Python para realizar operações bancárias"
+"Desafio de Projeto de Fundamentos de Python na Formação Python Developer da DIO."
+menu = """
+=====================================================
+| DIGITE A OPÇÃO QUE DESEJA?                        |
+|                                                   |
+| [1] DEPOSITO                                      |
+| [2] SAQUE                                         |
+| [3] TRANSFERÊNCIA                                 |
+| [4] PIX                                           |
+| [5] EXTRATO                                       |
+| [0] SAIR                                          |
+=====================================================
+=> """
+
+saldo = 0
+limite = 500
+extrato = ""
+numero_saques = 0
+LIMITE_SAQUES = 3
+
+while True:
+
+    opcao = input(menu)
+
+    if opcao == "1":
+        print("===================== DEPÓSITO ======================")
+        valor = float(input("INFORME O VALOR DO DEPÓSITO: "))
+        print("=====================================================")
+        if valor > 0:
+            saldo += valor
+            extrato += f"↑ DEPÓSITO:                R$ {valor:.2f}\n"
+            print(f"REALIZADO DEPÓSITO DE R$ {valor:.2f}\n")
+            print(f"\n\nSALDO: R$ {saldo:.2f}")
+        else:
+            print("OPERAÇÃO FALHOU! INFORME UM VALOR VÁLIDO.")
+    
+    elif opcao == "2":
+        print("======================= SAQUE =======================")
+        valor = float(input("INFORME O VALOR DO SAQUE: "))
+        print("=====================================================")
+
+        excedeu_saldo = valor > saldo
+
+        excedeu_limite = valor > limite
+
+        excedeu_saques = numero_saques >= LIMITE_SAQUES
+
+        if excedeu_saldo:
+            print("SALDO INSUFICIENTE.")
+
+        elif excedeu_limite:
+            print("OPERAÇÃO FALHOU! LIMITE DE VALOR DE SAQUE EXCEDIDO .")
+
+        elif excedeu_saques:
+            print("OPERAÇÃO FALHOU! LIMITE DE NÚMEROS DE SAQUES EXCEDIDO.")
+
+        elif valor > 0:
+            saldo -= valor
+            extrato += f"↓ SAQUE:                   R$ {valor:.2f}\n"
+            numero_saques += 1
+            print(f"SAQUE REALIZADO NO VALOR DE R$ {valor:.2f}\n")
+            print(f"\n\nSALDO: R$ {saldo:.2f}")
+        else:
+            print("OPERAÇÃO FALHOU! INFORME UM VALOR VÁLIDO.")
+
+    elif opcao == "3":
+        print("=================== TRANSFERÊCIA ====================")
+        valor = float(input("DIGITE O VALOR PARA TRANSFERÊNCIA: "))
+        print("=====================================================")
+                
+        excedeu_saldo = valor > saldo
+
+        if excedeu_saldo:
+            print("SALDO INSUFICIENTE.")
+
+        elif valor > 0:
+            saldo -= valor
+            extrato += f"↓ TRANSFERÊNCIA:           R$ {valor:.2f}\n"
+            print(f"TRANFERÊNCIA REALIZANA NO VALOR DE R$ {valor:.2f}\n")
+            print(f"\n\nSALDO: R$ {saldo:.2f}")
+        else:
+            print("OPERAÇÃO FALHOU! INFORME UM VALOR VÁLIDO.")
+                      
+    elif opcao == "4":
+        print("======================= PIX =========================")
+        valor = float(input("DIGITE O VALOR PARA TRANSFERÊNCIA PIX: "))
+        print("=====================================================")
+                
+        excedeu_saldo = valor > saldo
+
+        if excedeu_saldo:
+            print("SALDO INSUFICIENTE.")
+
+        elif valor > 0:
+            saldo -= valor
+            extrato += f"↓ PIX TRANFERIDO:          R$ {valor:.2f}\n"
+            print(f"REALIZADO PIX NO VALOR DE R$ {valor:.2f}\n")
+            print(f"\n\nSALDO: R$ {saldo:.2f}")
+        else:
+            print("OPERAÇÃO FALHOU! INFORME UM VALOR VÁLIDO.")
+    elif opcao == "5":
+        print("\n====================== EXTRATO ======================")
+        print("NÃO FORAM REALIZADAS MOVIMENTAÇÕES." if not extrato else extrato)
+        print(f"\nSALDO: R$ {saldo:.2f}")
+        print("=====================================================")
+
+    elif opcao == "0":
+        break
+
+    else:
+        print("OPÇÃO INVÁLIDA! SELECIONE NOVAMENTE A OPÇÃO DESEJADA.")
